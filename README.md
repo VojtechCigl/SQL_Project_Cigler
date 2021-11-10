@@ -1,5 +1,5 @@
 # SQL_Project
-Engeto SQL Project
+
 V tomto projektu se snažím určit faktory, které ovlivňují rychlost šíření koronaviru na úrovni jednotlivých států.
 
 Výsledná data budou panelová, klíče budou stát (country) a den (date). Každý sloupec v tabulce bude představovat jednu proměnnou. Úkolem je získat následující sloupce:
