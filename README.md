@@ -5,7 +5,7 @@ V tomto projektu se snažím určit faktory, které ovlivňují rychlost šíře
 Výsledná data budou panelová, klíče budou stát (country) a den (date). Každý sloupec v tabulce bude představovat jednu proměnnou. Úkolem je získat následující sloupce:
 
 Časové proměnné
-- binární proměnná pro víkend / pracovní den (binary_day)
+- binární proměnná pro víkend / pracovní den (day_of_the_week)
 - roční období daného dne (zakódujte prosím jako 0 až 3) (code_of_season)
 
 Proměnné specifické pro daný stát:
