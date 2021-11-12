@@ -16,7 +16,7 @@ Proměnné specifické pro daný stát:
 - dětská úmrtnost - použijeme jako indikátor kvality zdravotnictví (mortality)
 - medián věku obyvatel v roce 2018 - státy se starším obyvatelstvem mohou být postiženy více (median_age_2018)
 - podíly jednotlivých náboženství - použijeme jako proxy proměnnou pro kulturní specifika. Pro každé náboženství v daném 
-  státě - procentní podíl jeho příslušníků na celkovém obyvatelstvu
+  státě - procentní podíl jeho příslušníků na celkovém obyvatelstvu (religion_share)
 - rozdíl mezi očekávanou dobou dožití v roce 1965 a v roce 2015 - státy, ve kterých proběhl rychlý rozvoj mohou reagovat jinak 
    než země, které jsou vyspělé už delší dobu (life_exp_diff)
 
