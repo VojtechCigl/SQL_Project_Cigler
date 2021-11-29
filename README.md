@@ -6,24 +6,24 @@ Výsledná data budou panelová, klíče budou stát (country) a den (date). Ka�
 
 Časové proměnné
 - binární proměnná pro víkend / pracovní den (day_of_the_week)
-- roční období daného dne (zakódujte prosím jako 0 až 3) (code_of_season)
+- roční období daného dne (zakódujte prosím jako 0 až 3) (Season_code)
 
 Proměnné specifické pro daný stát:
 
 - hustota zalidnění - ve státech s vyšší hustotou zalidnění se nákaza může šířit rychleji (population_density)
 - HDP na obyvatele - použijeme jako indikátor ekonomické vyspělosti státu (GDPR_per_capita)
 - GINI koeficient - má majetková nerovnost vliv na šíření koronaviru? (gini_coeff)
-- dětská úmrtnost - použijeme jako indikátor kvality zdravotnictví (mortality)
+- dětská úmrtnost - použijeme jako indikátor kvality zdravotnictví (mortality_under5)
 - medián věku obyvatel v roce 2018 - státy se starším obyvatelstvem mohou být postiženy více (median_age_2018)
 - podíly jednotlivých náboženství - použijeme jako proxy proměnnou pro kulturní specifika. Pro každé náboženství v daném 
-  státě - procentní podíl jeho příslušníků na celkovém obyvatelstvu (religion_share)
+  státě - procentní podíl jeho příslušníků na celkovém obyvatelstvu (Christianity,Islam,Unaffiliated Religions)
 - rozdíl mezi očekávanou dobou dožití v roce 1965 a v roce 2015 - státy, ve kterých proběhl rychlý rozvoj mohou reagovat jinak 
-   než země, které jsou vyspělé už delší dobu (life_exp_diff)
+   než země, které jsou vyspělé už delší dobu (life_exp_ratio)
 
 Počasí (ovlivňuje chování lidí a také schopnost šíření viru):
 
 - průměrná denní (mezi 6-18 hod.) teplota (daily_avg_temp)
-- počet hodin v daném dni, kdy byly srážky nenulové (rain_hours)
-- maximální síla větru v nárazech během dne (daily_wind_force)
+- počet hodin v daném dni, kdy byly srážky nenulové (rainy_hours)
+- maximální síla větru v nárazech během dne (max_wind_gust)
 
-Data jsou čerpána z tabulek: countries, economies, life_expectancy, religions, covid19_basic_differences, covid19_tests, weather, lookup_table, viz. složka SQL-project/Data/
+Data jsou čerpána z tabulek: countries, economies, life_expectancy, religions, covid19_basic_differences, covid19_tests, weather
