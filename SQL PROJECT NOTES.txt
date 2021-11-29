@@ -1,0 +1,53 @@
+# USE TABLES countries, economies, life_expectancy, religions, covid19_basic_differences, covid19_testing, weather
+# VIEWS IN PROJECT:
+
+1. v_covid_variables 
+2  v_economies_population
+3. v_life_expectancy 
+4. v_religion
+5. v_weather_calculation
+
+Main project table t_vojtech_cigler_projekt_SQL_final puts all the views together
+
+
+Auxiliary views:
+
+# v_total_population - calculation of total population for every country 2020
+# v_weather_converting -converting weather variables
+
+
+Main steps:
+
+1. Vytvoření promměnných pro víkend / pracovní den (day_of_the_week) a roční období
+
+Using function DAYOFWEEK(date) (1 = Sunday, 2 = Monday, ..., 7 = Saturday) and then recode it
+set day_of_the_week=1 --//Set to 1 if you want to include weekdays, set to 0 if you want to exclude
+
+
+2. Vytvoření vysvětlované proměnné
+
+test_positivity_rate=Podíl nových případů nemoci covid-19 na počtu provedených testů na počet obyvatele
+tests_per_capita= Podíl celkově testovaných na covid-19 na celkové populaci dané země.
+
+3.v_economies_and_population
+
+U tabulky countries chybí nejaktuálnější data (2020 nebo 2021) pro GDPR_per_capita nebo gini koeficient.
+Řešením je vybrat maximální rok a kdy je hodnota vyplněna - tím získáme nejaktuálnější dostupnou hodnotu.
+
+4. Religion
+   
+Výběr top 3 nejpočetnějších náboženství na světě na obyvatele. 
+Do finální tabulky jsem vybral pouze nejrozšířenější náboženství dle statistik na internetu - Christianity,Islam,Unaffiliated_religions
+
+Postup:
+- pomocí Select Distinct zjistím kolik celkem náboženství se vyskytuje ve sloupci religion a pro každé náboženství vytvořím sloupec, který bude výsledkem porovnání s celkovou populací dané země.
+- pro každou zemi zjištuji, zda je počet obyvatel hlásící se k danému náboženství vyplněn, pokud ne, tak dosadím hodnotu 0. Tou se ale nesmí dělit.
+
+
+5. Weather
+
+Nejdříve je třeba zkonvertovat hodnoty na decimal nebo integer, abychom mohli použít agregační funkci a neházelo to "truncated" chyby.
+Pomůže i funkce replace, která nám nahradí nežadoucí znaky.
+
+Potom využít agregační funkce AVG,COUNT a MAX. U průměrné teploty zjištovat jen denní údaje - 6-18h.
+
