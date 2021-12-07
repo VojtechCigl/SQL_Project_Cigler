@@ -11,11 +11,11 @@
 
 # Auxiliary tables and views:
 
-#    v_total_population - calculation of total population for every country 2020
-#    v_weather_converting - for converting weather variables
+# v_total_population - calculation of total population for every country 2020   
+#  v_weather_converting - for converting weather variables
 
 # view v_economies_population. Creating variables code_of_season,population_density,median_age_2018
-# Using day_of_the_week and MONTH function. ?asov? prom?nn? bin?rn? prom?nn? pro v?kend / pracovn? den ro?n? obdob? dan?ho dne (zak?dovat jako 0 a? 3)
+# Using day_of_the_week and MONTH function. ÄŒasovÃ© promÄ›nnÃ© binÃ¡rnÃ­ promÄ›nnÃ© pro vÃ­kend / pracovnÃ­ den roÄnÃ­ obdobÃ­ danÃ©ho dne (zakÃ³dovat jako 0 aÅ¾ 3)
 
 
 # OPTIONS FOR replace Czechia by Czech republic
@@ -30,10 +30,9 @@
 #Modify column country from MEDIUM TEXT to TEXT - 
 #alter table aux_covid19_basic_differences 
 #MODIFY country TEXT;
-
+#
 #VIEW v_covid_variables
 #Covid variables - confirmed,test_performed,test_positivity_rate,tests_per_capita
-
 
 CREATE OR REPLACE VIEW v_covid_variables AS
  SELECT cbd.`date`,
@@ -95,10 +94,10 @@ CREATE OR REPLACE VIEW v_economies_and_population AS
       GROUP BY country)v3
    ON cnt.country = v3.country;
 
-# Vypoèet podílu jednotlivıch náboenství - pouijeme jako proxy promìnnou pro kulturní specifika.
-# Pro kadé náboenství v daném státu bych chtìl procentní podíl jeho pøíslušníkù na celkovém obyvatelstvu.
-#Pomocí Select Distinct zjistím kolik celkem náboenství se vyskytuje ve sloupci religion a pro kadé náboenství vytvoøím sloupec, kterı bude vısledkem porovnání s celkovou populací dané zemì.
-#Pro kadou zemi zjištuji, zda je poèet obyvatel hlásící se k danému náboenství vyplnìn, pokud ne, tak dosadím hodnotu 0. Tou se ale nesmí dìlit.
+# VypoÄet podÃ­lu jednotlivÃ½ch nÃ¡boÅ¾enstvÃ­ - pouÅ¾ijeme jako proxy promÄ›nnou pro kulturnÃ­ specifika.
+# Pro kaÅ¾dÃ© nÃ¡boÅ¾enstvÃ­ v danÃ©m stÃ¡tu bych chtÄ›l procentnÃ­ podÃ­l jeho pÅ™Ã­sluÅ¡nÃ­kÃ¹ na celkovÃ©m obyvatelstvu.
+#PomocÃ­ Select Distinct, zjistÃ­m kolik celkem nÃ¡boÅ¾enstvÃ­ se vyskytuje ve sloupci religion a pro kaÅ¾dÃ© nÃ¡boÅ¾enstvÃ­ vytvoÅ™Ã­m sloupec, kterÃ½ bude vÃ½sledkem porovnÃ¡nÃ­ s celkovou populacÃ­ danÃ© zemÃ¬.
+#Pro kaÅ¾dou zemi zjiÅ¡tuji, zda je poÄet obyvatel hlÃ¡sÃ­cÃ­ se k danÃ©mu nÃ¡boÅ¾enstvÃ­ vyplnÄ›n, pokud ne, tak dosadÃ­m hodnotu 0. Tou se ale nesmÃ­ dÄ›lit.
 
 
 # VIEW v_total_population
@@ -135,7 +134,7 @@ GROUP BY r1.country;
 
 
 
-#Calculation of life_expectancy. VARIABLE life_exp_ratio - rozdíl mezi oèekávanou dobou doití v roce 1965 a v roce 2015.
+#Calculation of life_expectancy. VARIABLE life_exp_ratio - rozdÃ­l mezi oÄekÃ¡vanou dobou doÅ¾itÃ­ v roce 1965 a v roce 2015.
 
 CREATE OR REPLACE VIEW v_life_expectancy AS
   SELECT a.country, a.life_exp_1965 , b.life_exp_2015,
@@ -153,7 +152,7 @@ CREATE OR REPLACE VIEW v_life_expectancy AS
     
 CREATE OR REPLACE VIEW v_weather_converting AS
  SELECT DATE(w.`date`) as 'date',w.`time`,w.city,c.country,
-        CONVERT(REPLACE(w.temp,' °c',''),INT) AS 'daily_avg_temp',
+        CONVERT(REPLACE(w.temp,' Â°c',''),INT) AS 'daily_avg_temp',
         CONVERT(REPLACE(w.rain,' mm',''),DECIMAL) AS 'rainy_hours',
         CONVERT(REPLACE(w.gust,' km/h',''),INT) AS 'max_wind_gust'
   FROM countries c
@@ -232,7 +231,7 @@ ORDER BY covid_var.`date` DESC,covid_var.country ASC;
 #from countries c
   
   
-#missing countries- zemì, které nejsou uvedeny buï v ádné tabulce nebo jen v covid19_basic_differences
+#missing countries- zemÄ›, kterÃ© nejsou uvedeny buÄ v Å¾Ã¡dnÃ© tabulce nebo jen v covid19_basic_differences
 
   #select distinct country
   #from covid19_basic_differences cbd 
@@ -256,7 +255,7 @@ ORDER BY covid_var.`date` DESC,covid_var.country ASC;
  #select distinct religion 
 #from religions r;
   
-  #ve finální tabulce je zastoupeno pouze 16 zemí, protoe potøebujeme data jak pro poèty nakaenıch, tak pro poèet testovanıch. V opaèném pøípadì je pozorování zkreslené.
+  #ve finÃ¡lnÃ­ tabulce je zastoupeno pouze 16 zemÃ­, protoÅ¾e potÅ™ebujeme data jak pro poÄty nakaÅ¾enÃ½ch, tak pro poÄet testovanÃ½ch. V opaÄnÃ©m pÅ™Ã­padÄ› je pozorovÃ¡nÃ­ zkreslenÃ©.
   #select distinct country
   #from t_vojtech_cigler_projekt_sql_final tvcpsf;
   
