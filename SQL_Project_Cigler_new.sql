@@ -164,29 +164,28 @@ CREATE OR REPLACE VIEW v_weather_converting AS
 
 
 CREATE OR REPLACE VIEW v_weather_calculation AS
- SELECT v1.*,
-        CASE WHEN v2.rainy_hours IS NULL THEN 0 ELSE v2.rainy_hours END AS rainy_hours,
-        v3.max_wind_gust
+ SELECT temp_avg.*,
+        CASE WHEN rain_count.rainy_hours IS NULL THEN 0 ELSE rain_count.rainy_hours END AS rainy_hours,
+        gust_max.max_wind_gust
  FROM
           (SELECT `date`,city,country,AVG(daily_avg_temp) AS 'daily_avg_temp'  
            FROM v_weather_converting vwc2 
            WHERE `time` IN ('06:00','09:00','12:00','15:00','18:00') 
            GROUP BY `date`,city,country
-           ORDER BY `date` DESC,city ASC) v1
+           ORDER BY `date` DESC,city ASC) temp_avg
  LEFT JOIN
           (SELECT DISTINCT `date`,city,country,Count(rainy_hours) AS 'rainy_hours' FROM v_weather_converting vwc2
            WHERE rainy_hours>0
-           GROUP BY `date`,city,country) v2
-     #having COUNT(rainy_hours)>0 ORDER BY `date` DESC,city ASC
-           ON v1.country = v2.country
-           AND v1.`date`= v2.`date`
+           GROUP BY `date`,city,country) rain_count
+           ON temp_avg.country = rain_count.country
+           AND temp_avg.`date`= rain_count.`date`
  LEFT JOIN
            (SELECT `date`,city,country,MAX(max_wind_gust) as 'max_wind_gust'  
             FROM v_weather_converting vwc2
             GROUP BY `date`,city,country
-            ORDER BY `date` DESC,city ASC) v3
-            ON  v1.country = v3.country
-           AND  v1.`date`= v3.`date`;
+            ORDER BY `date` DESC,city ASC) gust_max
+            ON  temp_avg.country = gust_max.country
+           AND  temp_avg.`date`= gust_max.`date`;
       
       
  #FINAL VIEW from all previous views - v_vojtech_cigler_projekt_SQL
