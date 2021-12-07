@@ -72,27 +72,27 @@ CREATE OR REPLACE VIEW v_economies_and_population AS
  SELECT cnt.*,v1.GDPR_per_capita,v2.gini_coeff,v3.mortality_under5
  FROM
      (SELECT c.country,c.capital_city,c.population,c.population_density,median_age_2018 FROM countries c) cnt
-  LEFT JOIN
+ LEFT JOIN
      (SELECT e.country, MAX(`YEAR`),
              ROUND(e.GDP/e.population, 2) AS 'GDPR_per_capita'
       FROM  economies e 
       WHERE e.GDP IS NOT NULL AND population>0
       GROUP BY country) v1
-    ON  cnt.country = v1.country
-  LEFT JOIN 
+            ON  cnt.country = v1.country
+ LEFT JOIN 
      (SELECT e.country,MAX(`YEAR`),
              e.gini AS 'gini_coeff'
       FROM   economies e
       WHERE  e.gini IS NOT NULL
       GROUP BY country) v2
-   ON cnt.country = v2.country
-  LEFT JOIN
+            ON cnt.country = v2.country
+ LEFT JOIN
      (SELECT e.country,MAX(`YEAR`),
 	         e.mortaliy_under5 AS 'mortality_under5'
       FROM economies e
       WHERE e.mortaliy_under5 IS NOT NULL
       GROUP BY country)v3
-   ON cnt.country = v3.country;
+            ON cnt.country = v3.country;
 
 # Vypočet podílu jednotlivých náboženství - použijeme jako proxy proměnnou pro kulturní specifika.
 # Pro každé náboženství v daném státu bych chtěl procentní podíl jeho příslušníkù na celkovém obyvatelstvu.
